@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace CSharpFundamentalsCourse
 {
@@ -12,7 +13,7 @@ namespace CSharpFundamentalsCourse
             int input = 0;
 
             // Ensure the user enters a valid selection.
-            while (input < 1 || input > 11)
+            while (input < 1 || input > 17)
             {
                 // Show the user their choices.
                 Console.WriteLine("Welcome to my program!\n");
@@ -27,8 +28,8 @@ namespace CSharpFundamentalsCourse
                 Console.WriteLine("8.   Enter five unique numbers and have them sorted.");
                 Console.WriteLine("9.   Enter some numbers until you choose and have them displayed.");
                 Console.WriteLine("10.  Enter some numbers and have the program display the smallest three.");
-                Console.WriteLine("11.  Unavailable");
-                Console.WriteLine("12.  Unavailable");
+                Console.WriteLine("11.  Enter some numbers and have the program determine whether they're consecutive.");
+                Console.WriteLine("12.  Enter some numbers and have the program determine whether there's duplicates.");
                 Console.WriteLine("13.  Unavailable");
                 Console.WriteLine("14.  Unavailable");
                 Console.WriteLine("15.  Unavailable");
@@ -74,6 +75,20 @@ namespace CSharpFundamentalsCourse
                     case 10:
                         ThreeSmallestNumbers();
                         break;
+                    case 11:
+                        CheckConsecutive();
+                        break;
+                    case 12:
+                        CheckDuplicate();
+                        break;
+                    case 13:
+                        CheckTimeFormat();
+                        break;
+                    case 14:
+                        ConvertPascalCase();
+                        break;
+                    default:
+                        continue;
                 }
             }
         }
@@ -364,6 +379,183 @@ namespace CSharpFundamentalsCourse
             numbers.Sort();
 
             Console.WriteLine("Three smallest numbers: " + numbers[0] + ", " + numbers[1] + ", " + numbers[2]);
+        }
+
+        static void CheckConsecutive()
+        {
+            Console.Write("Please enter numbers separated by a hyphen: ");
+            string[] input = Console.ReadLine().Split("-");
+
+            int currentNumber;
+            int prevNumber;
+            bool isConsecutive = true;
+            bool isDescending = false;
+            bool isAscending = false;
+
+            for (var i = 0; i < input.Length; i++)
+            {
+                if (i != 0)
+                {
+                    currentNumber = int.Parse(input[i]);
+                    prevNumber = int.Parse(input[i - 1]);
+
+                    if (currentNumber - 1 == prevNumber)
+                    {
+                        if (!isDescending && i > 1)
+                        {
+                            isConsecutive = false;
+                            Console.WriteLine("Not Consecutive");
+                            break;
+                        }
+
+                        isDescending = true;
+                    }
+                    else if (currentNumber + 1 == prevNumber)
+                    {
+                        if (!isAscending && i > 1)
+                        {
+                            isConsecutive = false;
+                            Console.WriteLine("Not Consecutive");
+                            break;
+                        }
+
+                        isAscending = true;
+                    }
+                    else
+                    {
+                        isConsecutive = false;
+                        Console.WriteLine("Not Consecutive");
+                        break;
+                    }
+                }
+            }
+
+            if (isConsecutive)
+            {
+                Console.WriteLine("Consecutive");
+            }
+
+            Console.ReadLine();
+        }
+
+        static void CheckDuplicate()
+        {
+            /*
+                Write a program and ask the user to enter a few numbers separated by a hyphen.
+                If the user simply presses Enter, without supplying an input, exit immediately;
+                otherwise, check to see if there are duplicates. If so, display "Duplicate" on the console.
+            */
+
+            // Ask for the user's input.
+            Console.Write("Please enter numbers separated by a hyphen: ");
+
+            // Take the user's input and separate on the hyphens.
+            var input = Console.ReadLine().Split("-");
+
+            // Create variable to store unique numbers.
+            var uniqueInput = new List<int>();
+
+            // If the user entered some input, search for duplicates.
+            if (input.Length > 0)
+            {
+                for (int i = 0; i < input.Length; i++)
+                {
+                    if (uniqueInput.Contains(int.Parse(input[i])))
+                    {
+                        Console.WriteLine("Duplicate Detected.");
+                        break;
+                    }
+                    else
+                    {
+                        uniqueInput.Add(int.Parse(input[i]));
+                    }
+                }
+            }
+
+            Environment.Exit(0);
+        }
+
+        static void CheckTimeFormat()
+        {
+            /*
+                Write a program and ask the user to enter a time value in the 24-hour time format (e.g. 19:00).
+                A valid time should be between 00:00 and 23:59. If the time is valid, display "Ok"; otherwise, "Invalid Time".
+                If the user doesn't provide any values, consider it as invalid time.
+            */
+
+            // Request user input.
+            Console.Write("Please enter a time value between 00:00 - 23:59: ");
+
+            // Store user input.
+            var input = Console.ReadLine().Split(":");
+
+            // Check if the input is valid.
+            if(int.Parse(input[0]) >= 0 && int.Parse(input[0]) < 24 && int.Parse(input[1]) >= 0 && int.Parse(input[1]) < 60)
+            {
+                Console.WriteLine("Valid input.");
+            }
+            else
+            {
+                Console.WriteLine("Invalid input.");
+            }
+        }
+
+        static void ConvertPascalCase()
+        {
+            /*
+                Write a program and ask the user to enter a few words separated by a space.
+                Use the words to create a variable name with PascalCase.
+                For example, if the user types: "number of students", display "NumberOfStudents".
+                Make sure that the program is not dependent on the input.
+                So, if the user types "NUMBER OF STUDENTS", the program should still display "NumberOfStudents".
+            */
+
+            // Request user input.
+            Console.Write("Please enter a string to convert to pascal case: ");
+
+            // Store user input.
+            var input = Console.ReadLine().ToLower().Split(" ");
+            var sb = new StringBuilder();
+
+            foreach (var split in input)
+            {
+                sb.Append(char.ToUpper(split[0])).Append(split[1..]);
+            }
+
+            Console.WriteLine(sb.ToString());
+        }
+
+        static void CountVowels()
+        {
+            /*
+                Write a program and ask the user to enter an English word.
+                Count the number of vowels (a, e, o, u, i) in the word.
+                So, if the user enters "inadequate", the program should display 6 on the console.
+            */
+
+            // Request user input.
+            Console.Write("Please enter a string to count the vowels for: ");
+
+            // Store user input.
+            var input = Console.ReadLine();
+            var vowelCount = 0;
+
+            // Loop through the characters in the input string.
+            foreach (var character in input)
+            {
+                // If the current character is a vowel, increase the count.
+                if (char.ToUpper(character) == 'A' ||
+                    char.ToUpper(character) == 'E' ||
+                    char.ToUpper(character) == 'I' ||
+                    char.ToUpper(character) == 'O' ||
+                    char.ToUpper(character) == 'U')
+                {
+                    vowelCount++;
+                }
+            }
+
+            // Display the vowel count to the user.
+            Console.WriteLine("Number of Vowels: " + vowelCount);
         }
     }
 }
