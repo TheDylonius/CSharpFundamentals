@@ -9,10 +9,6 @@ This repository will be updated as I progress through the C# Fundamentals Course
 - [x] Section 5:	Control Flow
 - [x] Section 6:	Arrays and Lists
 - [x] Section 7:	Working with Dates
-- [ ] Section 8:	Working with Text
-- [ ] Section 9:	Working with Files
-- [ ] Section 10:	Debugging Applications
-
-## Next Actions
-1. Finish Course
-2. Comment All Code
+- [x] Section 8:	Working with Text
+- [x] Section 9:	Working with Files
+- [x] Section 10:	Debugging Applications
