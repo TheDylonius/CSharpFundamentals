@@ -1,5 +1,5 @@
 # csharp-fundamentals
-This repository will be updated as I progress through the C# Fundamentals Course by Mosh Hamedani.
+This repository hosts my project for the C# Fundamentals course by Mosh Hamedani.
 
 ## Progress
 - [x] Section 1:	General Introduction
